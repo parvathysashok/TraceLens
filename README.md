@@ -1,304 +1,348 @@
-🔎 TraceLens
-On-Device AI-Assisted Digital Forensics & Evidence Correlation
+# 🔎 TraceLens
+## On-Device AI-Assisted Digital Forensics
 
-TraceLens is a privacy-conscious digital forensics platform for investigating suspicious PDF artifacts. It combines deterministic forensic analysis, evidence extraction, indicator correlation, risk assessment, and local AI-assisted reasoning in an interactive Streamlit dashboard.
+TraceLens is a lightweight cybersecurity forensic investigation tool that analyzes suspicious PDF artifacts using deterministic evidence extraction, indicator correlation, risk scoring, and local AI-assisted analysis.
 
-The AI analysis runs locally using Qwen3-0.6B + ONNX Runtime, so sensitive forensic evidence does not need to be sent to a cloud AI service.
+The project is designed to help investigators quickly understand the contents and characteristics of a suspicious digital artifact without relying on cloud-based AI services.
 
-✨ Features
+## 🚀 Features
 
-🔐 Artifact Fingerprinting
+### 📄 PDF Forensic Analysis
 
-SHA-256
+- Extracts document metadata
+- Detects embedded JavaScript
+- Extracts document text
+- Reports page count
 
-MD5
+### 🔐 File Fingerprinting
 
-File type
+- SHA-256 hash
+- MD5 hash
+- File type
+- File size
+- Original filename
 
-File size
+### 🌐 Indicator Extraction
 
-📄 PDF Forensic Analysis
+- URLs
+- Email addresses
+- IP addresses
+- Suspicious security-related keywords
 
-Page count
+### 🧩 Evidence Correlation
 
-PDF metadata
+- Combines multiple indicators extracted from the same artifact
+- Displays evidence sources
+- Provides an investigator-friendly evidence view
 
-Creation/modification information
+### 🕒 Artifact Timeline
 
-Producer and creator information
+- Created timestamp
+- Modified timestamp
+- Accessed timestamp
 
-Extracted document text
+### ⚠️ Deterministic Risk Assessment
 
-🔎 Indicator Extraction
+- Calculates a reproducible risk score
+- Classifies artifacts as LOW, MEDIUM, or HIGH risk
+- Risk calculation is performed by the forensic engine rather than the AI model
 
-URLs
+### 🤖 Local AI Investigation
 
-Email addresses
+- Uses Qwen3-0.6B locally
+- Runs through ONNX Runtime
+- CPU inference supported
+- No external AI API required
+- Provides an AI-assisted explanation of extracted evidence
 
-IP addresses
+### 🖥️ Interactive Streamlit Dashboard
 
-Suspicious keywords
+- Professional dark cybersecurity interface
+- Organized forensic sections
+- Upload-and-analyze workflow
+- Investigator-friendly presentation
 
-Security-related language
+## 🏗️ Architecture
 
-🧩 Evidence Correlation
+```text
+                    ┌─────────────────────┐
+                    │   Suspicious PDF    │
+                    └──────────┬──────────┘
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │   File Analyzer     │
+                    │                     │
+                    │ • Hashes            │
+                    │ • File type         │
+                    │ • File metadata     │
+                    └──────────┬──────────┘
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │    PDF Analyzer     │
+                    │                     │
+                    │ • Metadata          │
+                    │ • Text              │
+                    │ • URLs              │
+                    │ • Emails            │
+                    │ • IP addresses      │
+                    │ • Keywords         │
+                    │ • JavaScript        │
+                    └──────────┬──────────┘
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │ Evidence Correlation│
+                    └──────────┬──────────┘
+                               │
+                 ┌─────────────┴─────────────┐
+                 ▼                           ▼
+       ┌──────────────────┐        ┌──────────────────┐
+       │ Deterministic    │        │ Local AI Engine  │
+       │ Risk Engine      │        │                  │
+       │                  │        │ Qwen3-0.6B       │
+       │ Risk Score       │        │ ONNX Runtime     │
+       │ Risk Level       │        │ CPU Inference    │
+       └────────┬─────────┘        └────────┬─────────┘
+                │                           │
+                └─────────────┬─────────────┘
+                              ▼
+                    ┌─────────────────────┐
+                    │ Streamlit Dashboard │
+                    └─────────────────────┘
+```
 
-Combines multiple observable indicators
+## 🛠️ Technology Stack
+Technology	Purpose
+Python	Core application
+Streamlit	Web dashboard
+ONNX Runtime	Local AI inference
+Qwen3-0.6B	Local language model
+PyMuPDF	PDF processing
+Transformers	Tokenization/model utilities
+NumPy	Numerical processing
 
-Shows indicator sources
-
-Provides a structured investigation view
-
-⚠️ Deterministic Risk Assessment
-
-Evidence-based scoring
-
-LOW / MEDIUM / HIGH severity levels
-
-Independent of AI-generated guesses
-
-🤖 Local AI Investigation
-
-Qwen3-0.6B
-
-ONNX Runtime
-
-CPU inference
-
-AI-assisted evidence interpretation
-
-🕒 Artifact Timeline
-
-Created
-
-Modified
-
-Accessed
-
-🖥️ Interactive Dashboard
-
-Streamlit-based interface
-
-Dark cybersecurity-themed UI
-
-Investigator-oriented presentation
-
-🏗️ Architecture
-                 ┌─────────────────────┐
-                 │   Suspicious PDF    │
-                 └──────────┬──────────┘
-                            │
-                            ▼
-                 ┌─────────────────────┐
-                 │  File Fingerprint   │
-                 │ SHA-256 / MD5       │
-                 └──────────┬──────────┘
-                            │
-                            ▼
-                 ┌─────────────────────┐
-                 │  PDF Forensic       │
-                 │  Analysis           │
-                 └──────────┬──────────┘
-                            │
-                ┌───────────┴───────────┐
-                ▼                       ▼
-       ┌────────────────┐      ┌────────────────┐
-       │ Indicator      │      │ PDF Metadata   │
-       │ Extraction     │      │ & Text         │
-       └───────┬────────┘      └───────┬────────┘
-               │                       │
-               └───────────┬───────────┘
-                           ▼
-                 ┌─────────────────────┐
-                 │ Evidence Correlation│
-                 └──────────┬──────────┘
-                            │
-                            ▼
-                 ┌─────────────────────┐
-                 │ Deterministic Risk  │
-                 │ Assessment           │
-                 └──────────┬──────────┘
-                            │
-                            ▼
-                 ┌─────────────────────┐
-                 │ Local Qwen3-0.6B    │
-                 │ AI Investigation    │
-                 └──────────┬──────────┘
-                            │
-                            ▼
-                 ┌─────────────────────┐
-                 │ Streamlit Dashboard │
-                 └─────────────────────┘
-
-🛠️ Technology Stack
-Component	Technology
-Language	Python
-Frontend	Streamlit
-AI Model	Qwen3-0.6B
-AI Runtime	ONNX Runtime
-Inference	CPU
-Document Analysis	PDF analysis libraries
-Hashing	SHA-256 / MD5
-Interface	Streamlit
-📂 Project Structure
+```
+📁 Project Structure
 TraceLens/
 │
-├── ai/
-│   └── local_llm.py
+├── app.py
 │
 ├── analyzer/
 │   ├── file_analyzer.py
 │   └── pdf_analyzer.py
 │
-├── app.py
+├── ai/
+│   └── local_llm.py
+│
+├── models/
+│   └── qwen3-0.6b/
 │
 ├── requirements.txt
 │
 ├── README.md
 │
-└── test/
+└── ...
+```
 
-
-The exact structure may vary depending on the current project version.
-
-⚙️ Installation
+## ⚙️ Installation
 1. Clone the repository
+```
 git clone https://github.com/YOUR_USERNAME/TraceLens.git
 cd TraceLens
-
-2. Create a virtual environment
-Windows
+```
+3. Create a virtual environment
+```
 python -m venv .venv
-.venv\Scripts\Activate.ps1
-
+```
+4. Activate the virtual environment
+Windows PowerShell
+```
+.\.venv\Scripts\Activate.ps1
+```
+Windows CMD
+```
+.venv\Scripts\activate
+```
 Linux / macOS
-python3 -m venv .venv
+```
 source .venv/bin/activate
-
-3. Install dependencies
+```
+4. Install dependencies
+```
 pip install -r requirements.txt
+```
+## 🤖 Local AI Model
+TraceLens uses a locally hosted Qwen3-0.6B model through ONNX Runtime.
 
-🤖 Local AI Model
+The AI component is designed to explain already-extracted forensic evidence rather than independently determine whether an artifact is malicious.
 
-TraceLens uses Qwen3-0.6B through ONNX Runtime.
+The architecture intentionally separates:
+```
+Forensic Evidence
+       ↓
+Deterministic Risk Calculation
+       ↓
+Local AI Explanation
+```
+This makes the risk score reproducible while allowing the local model to provide a human-readable investigation summary.
 
-The model is loaded locally and inference is performed using:
-
-CPUExecutionProvider
-
-
-No external AI API is required for the forensic AI analysis.
-
-Make sure the required model and tokenizer files are placed in the location expected by:
-
-ai/local_llm.py
-
-🚀 Running TraceLens
-
+## ▶️ Running TraceLens
 Start the Streamlit application:
-
+```
 streamlit run app.py
+```
+Then open the local Streamlit URL shown in the terminal.
 
+Upload a suspicious PDF and TraceLens will perform the forensic analysis automatically.
 
-Then open the local Streamlit address shown in your terminal.
+## 🔍 Investigation Workflow
+TraceLens follows a structured investigation pipeline:
+```
+1. Upload PDF
+        ↓
+2. Calculate file fingerprints
+        ↓
+3. Analyze PDF structure
+        ↓
+4. Extract metadata
+        ↓
+5. Extract URLs / emails / IPs
+        ↓
+6. Detect suspicious keywords
+        ↓
+7. Detect embedded behavior indicators
+        ↓
+8. Build artifact timeline
+        ↓
+9. Correlate evidence
+        ↓
+10. Calculate deterministic risk score
+        ↓
+11. Run local AI investigation
+        ↓
+12. Display forensic dashboard
+```
 
-Upload a suspicious PDF and TraceLens will automatically perform the forensic analysis.
-
-🔬 Investigation Workflow
-
-TraceLens follows this workflow:
-
-Upload Artifact
-      ↓
-Calculate File Hashes
-      ↓
-Analyze PDF Structure
-      ↓
-Extract Metadata
-      ↓
-Extract Document Text
-      ↓
-Detect Indicators
-      ↓
-Correlate Evidence
-      ↓
-Calculate Risk Score
-      ↓
-Local AI Investigation
-      ↓
-Generate Investigation Report
-
-📊 Example Investigation
-
-For a PDF containing account-verification language, TraceLens may identify:
-
-Risk Score: 55/100
-Risk Level: MEDIUM
-
+## 📊 Example Investigation
+For a sample PDF containing account-verification language, TraceLens may identify indicators such as:
+```
 URL:
+
 https://example.com/login
 
 Email:
+
 security@example.com
 
 Keywords:
+
 verify your account
 login
 sign in
 immediately
 security alert
+```
 
+The dashboard then presents these observations alongside:
 
-The system then presents the observations alongside the artifact fingerprint, metadata, timeline, correlation results, and local AI-assisted analysis.
+File hashes
 
-Indicators are observations and should be independently validated during a complete investigation.
+PDF metadata
 
-🔐 Privacy
+Timeline information
 
-TraceLens is designed with local processing in mind.
+Risk score
 
-The forensic artifact and extracted evidence can remain on the investigator's machine while the local Qwen3-0.6B model provides AI-assisted analysis.
+Risk level
 
-This architecture reduces dependence on external AI APIs and is particularly useful when working with sensitive documents.
+Evidence correlation
 
-⚠️ Disclaimer
+Local AI investigation
 
-TraceLens is an investigative assistance and research tool.
+## 🔐 Privacy
+TraceLens is designed with a local-first architecture.
 
-Risk scores and AI-generated explanations should not be treated as definitive proof of malicious activity. Findings should be validated using appropriate forensic procedures and additional evidence.
+The forensic analysis and AI investigation can run locally on the user's machine.
 
-Do not open, execute, or interact with suspicious URLs or files outside an appropriate controlled environment.
+No external AI API is required for the local Qwen3 inference component.
 
-🔮 Future Development
+This makes the architecture suitable for demonstrations and controlled forensic analysis where sending potentially sensitive documents to external AI services may not be desirable.
 
-Planned or potential improvements include:
+## ⚠️ Important Notes
+TraceLens is an investigation and analysis tool, not a definitive malware classifier.
 
- OCR-based image analysis
+An extracted URL, keyword, email address, or metadata field should be treated as an indicator requiring investigation rather than automatic proof of malicious activity.
 
- DOCX/XLSX artifact analysis
+The deterministic risk score is based on the project's configured rules and should not be interpreted as a universally validated threat score.
 
- YARA rule integration
+The local AI component provides an explanation of supplied evidence and should be reviewed by a human investigator.
 
- URL reputation analysis
+## 🎯 Project Goals
+TraceLens was developed to demonstrate how traditional digital forensics can be combined with local AI assistance.
 
- MITRE ATT&CK mapping
+The main goals are:
 
- Evidence graph visualization
+Make forensic evidence easier to understand
 
- Multi-file investigations
+Reduce manual inspection time
 
- Case management
+Correlate multiple artifact indicators
 
- Automated forensic report generation
+Provide reproducible risk scoring
 
- Additional local AI models
+Demonstrate privacy-preserving local AI
 
- Standardized evidence export
+Present forensic findings through an accessible dashboard
 
-🎯 Project Goal
+## 🚧 Future Improvements
+Potential future enhancements include:
 
-The goal of TraceLens is to demonstrate how traditional digital forensics and privacy-conscious local AI can work together to make suspicious artifact investigation faster, more structured, and easier to understand.
+🔗 Advanced URL reputation analysis
 
-TraceLens
+🧬 Malware and file signature detection
 
-Extract. Correlate. Investigate.
+🖼️ OCR-based visual phishing detection
+
+📧 Email artifact analysis
+
+🌐 Domain and IP reputation checks
+
+📈 Advanced evidence correlation graphs
+
+🗺️ Geographic infrastructure visualization
+
+🧠 Improved local forensic language models
+
+📋 Automated investigation reports
+
+📤 PDF/HTML forensic report export
+
+🔎 IOC search and enrichment
+
+🧪 Sandboxed artifact analysis
+
+## 🏆 Why TraceLens?
+Traditional file analysis often produces large amounts of raw technical information.
+
+TraceLens attempts to bridge the gap between:
+```
+Raw Digital Artifact
+        ↓
+Forensic Evidence
+        ↓
+Correlated Indicators
+        ↓
+Risk Assessment
+        ↓
+AI-Assisted Explanation
+        ↓
+Human Investigation
+```
+The result is a single interface for examining suspicious digital artifacts while keeping the analysis structured, explainable, and local-first.
+
+## 👨‍💻 Author
+Parvathy S Ashok
+
+TraceLens — On-Device AI-Assisted Digital Forensics
